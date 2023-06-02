@@ -3,6 +3,11 @@
 #include <stdlib.h>
 
 #define _weights 3
+#define EPOCH 5000
+#define LR 0.1
+#define EXPER 4
+#define countData 3
+
 double w[_weights];
 
 double activate(double a) {
@@ -10,23 +15,22 @@ double activate(double a) {
 }
 
 
-double rProp(double inputs[3]) {
+double rProp(double inputs[countData]) {
     double res = 0;
     
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < countData; i++) {
         res += w[i] * inputs[i];
     }
     
     return res;
 }
 
-void train(int data[4][3], int exp[4]) {
-    const double LR = 0.1, EPOCH = 50;
+void train(int data[EXPER][countData], int exp[EXPER]) {
     int d, i, n;
     double error;
     
     for (int i = 0; i < EPOCH; i++) {
-        for (int d = 0; d < 4; d++) {
+        for (int d = 0; d < EXPER; d++) {
             error = exp[d] - activate(rProp((double*)data[d]));
             
             for (n = 0; n < _weights; n++) {
@@ -38,13 +42,13 @@ void train(int data[4][3], int exp[4]) {
 
 int main(int argc, const char * argv[]) {
 
-    int trainData[4][3] = {{0, 0, 1}, {0, 1, 1}, {1, 0, 1}, {0, 1, 0}}, expresults[4] = {1, 1, 0}, i;
+    int trainData[EXPER][countData] = {{0, 0, 1}, {0, 1, 1}, {1, 0, 1}, {0, 1, 0}}, expresults[EXPER] = {1, 1, 0}, i;
     srand(1);
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < _weights; i++) {
         w[i] = fmod(rand()%100000000 * 0.1, 1.05);
     }
     train(trainData, expresults);
-    double new[3] = {1, 1, 0};
+    double new[countData] = {1, 1, 0};
     printf("%.1f\n", activate(rProp(new)));
     return 0;
 }
