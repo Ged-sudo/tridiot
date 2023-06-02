@@ -6,7 +6,7 @@
 #define EPOCH 5000
 #define LR 0.1
 #define EXPER 4
-#define countData 3
+#define countData 10
 
 double w[_weights];
 
@@ -42,13 +42,19 @@ void train(int data[EXPER][countData], int exp[EXPER]) {
 
 int main(int argc, const char * argv[]) {
 
-    int trainData[EXPER][countData] = {{0, 0, 1}, {0, 1, 1}, {1, 0, 1}, {0, 1, 0}}, expresults[EXPER] = {1, 1, 0}, i;
+    int trainData[EXPER][countData] = {
+        {20, 23, 25, 24, 26, 22, 23, 27, 23, 22},
+        {20, 21, 22, 24, 26, 22, 23, 21, 20, 19},
+        {20, 19, 16, 18, 15, 19, 18, 17, 16, 21},
+        {20, 23, 25, 24, 26, 22, 23, 27, 23, 22}
+    },
+    expresults[EXPER] = {1, 1, 0}, i;
     srand(1);
     for (i = 0; i < _weights; i++) {
         w[i] = fmod(rand()%100000000 * 0.1, 1.05);
     }
     train(trainData, expresults);
-    double new[countData] = {1, 1, 0};
+    double new[countData] = {20, 23, 25, 24, 26, 22, 23, 27, 23, 22};
     printf("%.1f\n", activate(rProp(new)));
     return 0;
 }
